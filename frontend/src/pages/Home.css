@@ -1,0 +1,47 @@
+.home-welcome {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.welcome-box {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 700px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.welcome-box h1 {
+    font-size: 2.8rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.welcome-box h1 span {
+    color: #1abc9c;
+}
+
+.welcome-box p {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.7;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
