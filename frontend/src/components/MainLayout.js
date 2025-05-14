@@ -31,7 +31,7 @@ export default function MainLayout() {
                     <li onClick={() => setActivePage('home')}> Home</li>
                     <li onClick={() => setActivePage('login')}> Login</li>
                     <li onClick={() => setActivePage('signup')}> Sign Up</li>
-                    <li onClick={() => setActivePage('chat')}>🤖 Chatbot</li>
+                    <li onClick={() => setActivePage('chat')}>Chatbot <img src="AI.svg" className='AiIcon' /> </li>
                 </ul>
             </nav>
             <main className="main-content">
