@@ -3,6 +3,7 @@
     margin: 3rem auto;
     border-radius: 10px;
     overflow: hidden;
+    overflow-x: hidden;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     background: #fff;
     display: flex;
@@ -38,10 +39,12 @@
 
 .message.user {
     justify-content: flex-end;
+
 }
 
 .message.bot {
     justify-content: flex-start;
+    max-width: 80%;
 }
 
 .bubble {
@@ -57,13 +60,19 @@
 .message.user .bubble {
     background-color: #1abc9c;
     color: white;
+    line-break: auto;
     border-bottom-right-radius: 0;
+    word-wrap: break-word;
+
 }
 
 .message.bot .bubble {
     background-color: #ecf0f1;
     color: #333;
+    line-break: auto;
     border-bottom-left-radius: 0;
+    max-width: 100%;
+    word-wrap: break-word;
 }
 
 .chat-input {
