@@ -38,7 +38,12 @@
 
 .main-content {
     flex: 1;
-    padding: 2rem;
+    padding: 1rem;
     background-color: #ecf0f1;
     overflow-y: auto;
+}
+.AiIcon{
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
 }
