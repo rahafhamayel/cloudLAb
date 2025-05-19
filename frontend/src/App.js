@@ -1,8 +1,14 @@
+
 import React from 'react';
-import MainLayout from './components/MainLayout';
+import MainLayout from './components/MainLayout'; // Assuming this is the correct path
+import { AuthProvider } from './AuthContext';  
 
 function App() {
-  return <MainLayout />;
+  return (
+    <AuthProvider>
+      <MainLayout />
+    </AuthProvider>
+  );
 }
 
 export default App;
