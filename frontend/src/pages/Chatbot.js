@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '../AuthContext'; // This uses your AuthContext with Amplify Auth v6 imports
 import '../chatbot.css';
-import { GraphQLAPI } from '@aws-amplify/api-graphql'; // Keep for GraphQL logging
-
-// --- CORRECTED Amplify Auth v6 Import for session ---
+import { generateClient } from 'aws-amplify/api'; // Updated import for API calls
 import { fetchAuthSession } from '@aws-amplify/auth';
 
 // --- AWS SDK Imports for Lex ---
@@ -142,34 +140,58 @@ export default function Chatbot() {
   }, [isAuthenticated, user, initializeLexClient]);
 
   const fetchConversationHistory = useCallback(async () => {
+    if (!isAuthenticated || !user) {
+      console.log("Not authenticated, skipping history fetch");
+      setMessages([{ type: 'bot', text: 'Please sign in to use the chat feature.' }]);
+      setIsLoading(false);
+      return;
+    }
+    
     try {
       setIsLoading(true);
       const userId = user?.username || user?.attributes?.sub || user?.userId;
       if (!userId) throw new Error('User ID not available');
 
-      const response = await GraphQLAPI.graphql({
+      // Make sure we have a valid auth session before making API calls
+      await fetchAuthSession();
+      
+      // Create a client for API calls
+      const client = generateClient();
+      
+      console.log("Fetching conversation history for user:", userId);
+      const response = await client.graphql({
         query: GET_CONVERSATION_HISTORY,
-        variables: { userId }
+        variables: { userId },
+        authMode: 'userPool' // Explicitly use user pool auth
       });
 
       let history = response.data.getConversationHistory || [];
-      history.sort((a, b) => a.timestamp - b.timestamp);
+history.sort((a, b) => a.timestamp - b.timestamp);
 
-      const formatted = history.map(item => {
-        const msg = item.message;
-        if (msg.startsWith('USER: ')) return { type: 'user', text: msg.substring(6) };
-        if (msg.startsWith('BOT: ')) return { type: 'bot', text: msg.substring(5) };
-        return { type: 'system', text: msg };
-      });
+const formatted = history.map(item => {
+  const msg = item.message;
+  if (msg.startsWith('USER: ')) return { type: 'user', text: msg.substring(6) };
+  if (msg.startsWith('BOT: ')) return { type: 'bot', text: msg.substring(5) };
+  return { type: 'system', text: msg };
+});
 
-      setMessages(formatted.length ? formatted : [{ type: 'bot', text: 'Hello! How can I help you today?' }]);
+const initialMessage = { type: 'bot', text: 'Hello! How can I help you today?' };
+setMessages([initialMessage, ...formatted]);
+
     } catch (err) {
-      console.error('Error fetching history:', err);
-      setMessages([{ type: 'bot', text: 'Hello! How can I help you today?' }]);
+      console.error('Error fetching history:', err.message, err.stack);
+      
+      // Check for auth errors
+      if (err.message?.includes('not authorized') || err.message?.includes('UnauthorizedException')) {
+        console.log("Authorization error when fetching history");
+        setMessages([{ type: 'bot', text: 'Unable to load chat history. Please check your account permissions.' }]);
+      } else {
+        setMessages([{ type: 'bot', text: 'Hello! How can I help you today?' }]);
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, isAuthenticated]);
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -186,14 +208,45 @@ export default function Chatbot() {
   }, [messages]);
 
   const logMessageToAPI = async (userText, botResponse) => {
+    if (!isAuthenticated || !user) {
+      console.log("Not authenticated, skipping message logging");
+      return;
+    }
+    
     try {
       const userId = user?.username || user?.attributes?.sub || user?.userId;
       if (!userId) throw new Error('Missing user ID');
 
-      await GraphQLAPI.graphql({ query: LOG_CONVERSATION, variables: { userId, message: `USER: ${userText}` } });
-      await GraphQLAPI.graphql({ query: LOG_CONVERSATION, variables: { userId, message: `BOT: ${botResponse}` } });
+      // Make sure we have a valid auth session before making API calls
+      await fetchAuthSession();
+      
+      // Create a client for API calls
+      const client = generateClient();
+      
+      // Log user message
+      console.log("Logging user message for user:", userId);
+      await client.graphql({
+        query: LOG_CONVERSATION,
+        variables: { userId, message: `USER: ${userText}` },
+        authMode: 'userPool' // Explicitly use user pool auth
+      });
+      
+      // Log bot response
+      console.log("Logging bot response for user:", userId);
+      await client.graphql({
+        query: LOG_CONVERSATION,
+        variables: { userId, message: `BOT: ${botResponse}` },
+        authMode: 'userPool' // Explicitly use user pool auth
+      });
+      
+      console.log("Successfully logged conversation");
     } catch (err) {
-      console.error('Error logging message:', err);
+      console.error('Error logging message:', err.message, err.stack);
+      
+      // Log specific auth errors
+      if (err.message?.includes('not authorized') || err.message?.includes('UnauthorizedException')) {
+        console.log("Authorization error when logging message");
+      }
     }
   };
 
