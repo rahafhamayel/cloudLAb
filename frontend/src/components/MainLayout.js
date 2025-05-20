@@ -8,8 +8,6 @@ import Chatbot from '../pages/Chatbot'
 import './MainLayout.css';
 import { useAuth } from '../AuthContext';
 import { signInWithRedirect } from '@aws-amplify/auth';
-import { Auth } from 'aws-amplify'; // Import Auth
-
 export default function MainLayout() {
     const [activePage, setActivePage] = useState('home');
     const { isAuthenticated, signOut, user, loading: authLoading } = useAuth();
