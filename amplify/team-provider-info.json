@@ -1,15 +1,36 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-cloudlab-dev-00e72-authRole",
-      "UnauthRoleArn": "arn:aws:iam::320169793604:role/amplify-cloudlab-dev-00e72-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::320169793604:role/amplify-cloudlab-dev-00e72-authRole",
-      "Region": "eu-north-1",
-      "DeploymentBucketName": "amplify-cloudlab-dev-00e72-deployment",
-      "UnauthRoleName": "amplify-cloudlab-dev-00e72-unauthRole",
-      "StackName": "amplify-cloudlab-dev-00e72",
-      "StackId": "arn:aws:cloudformation:eu-north-1:320169793604:stack/amplify-cloudlab-dev-00e72/5b4f52d0-3290-11f0-b2e5-06c23aed3977",
-      "AmplifyAppId": "d2mg0qbl99yn5f"
+      "AuthRoleName": "amplify-cloudlab-dev-233b3-authRole",
+      "UnauthRoleArn": "arn:aws:iam::320169793604:role/amplify-cloudlab-dev-233b3-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::320169793604:role/amplify-cloudlab-dev-233b3-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-cloudlab-dev-233b3-deployment",
+      "UnauthRoleName": "amplify-cloudlab-dev-233b3-unauthRole",
+      "StackName": "amplify-cloudlab-dev-233b3",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:320169793604:stack/amplify-cloudlab-dev-233b3/547630c0-3590-11f0-bd4a-02fbc5a7c217",
+      "AmplifyAppId": "duxd88qejqz6p"
+    },
+    "categories": {
+      "auth": {
+        "cloudlab835222c7": {
+          "userPoolId": "ap-northeast-2_ghgExgm6W",
+          "userPoolName": "User pool - 1nqqlh",
+          "webClientId": "32015ii92p4ubrn5drs55rp5ej",
+          "nativeClientId": "32015ii92p4ubrn5drs55rp5ej"
+        }
+      },
+      "storage": {
+        "ConversationHistory": {
+          "tableName": "ConversationHistory",
+          "region": "ap-northeast-2",
+          "arn": "arn:aws:dynamodb:ap-northeast-2:320169793604:table/ConversationHistory",
+          "partitionKeyName": "userId",
+          "partitionKeyType": "S",
+          "sortKeyName": "timestamp",
+          "sortKeyType": "N"
+        }
+      }
     }
   }
 }

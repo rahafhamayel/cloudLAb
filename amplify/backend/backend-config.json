@@ -1,1 +1,127 @@
-{}
+{
+  "api": {
+    "cloudlab": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "auth": {
+    "cloudlab835222c7": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_cloudlab835222c7_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "cloudlab835222c7"
+        }
+      ]
+    },
+    "AMPLIFY_auth_cloudlab835222c7_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "cloudlab835222c7"
+        }
+      ]
+    },
+    "AMPLIFY_auth_cloudlab835222c7_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "cloudlab835222c7"
+        }
+      ]
+    },
+    "AMPLIFY_auth_cloudlab835222c7_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "cloudlab835222c7"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_sortKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_sortKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_ConversationHistory_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "ConversationHistory"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "ConversationHistory": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB",
+      "serviceType": "imported"
+    }
+  }
+}
